@@ -1,27 +1,71 @@
-class Product:
+from abc import ABC, abstractmethod
+
+class IProduct(ABC):
+    @abstractmethod
+    def get_name(self):
+        pass
+    @abstractmethod
+    def get_amount(self):
+        pass
+
+class Product(IProduct):
     def __init__(self, name, amount):
         self.name = name
         self.amount = amount
 
-class Supply:
-    def __init__(self, product: Product):
-        self.price = 0
-        self.supply = 0
-        self.demand = 0
-        self.supply_product: Product = product
+    def get_name(self):
+        return self.name
 
-    def get_price(self):
-        return self.price
+    def get_amount(self):
+        return self.amount
 
-    def get_product(self):
-        return self.supply_product.name
+class IDemand(ABC):
+    @abstractmethod
+    def get(self):
+        pass
 
-    def get_product_amount(self):
-        return self.supply_product.amount
+    @abstractmethod
+    def add(self, item):
+        pass
 
-class Demand:
+    @abstractmethod
+    def remove(self, item):
+        pass
+
+class ISupply(ABC):
+    @abstractmethod
+    def set(self, product: Product):
+        pass
+
+class Demand(IDemand):
     def __init__(self):
-        self.demands: dict[str, Product]
+        self.demands: dict[str, Product] = {}
 
-    def get_demands(self):
-        return self.get_demands()
+    def get(self):
+        return self.demands
+
+    def add(self, item: Product):
+        self.demands[item.name] = item
+
+    def remove(self, item):
+        if item.name in self.demands:
+            del self.demands[item.name]
+
+    def replace(self, item:Product, replacement:Product):
+        self.remove(item)
+        self.add(replacement)
+
+class Supply(ISupply):
+    def __init__(self, product):
+        self.product: IProduct = product
+
+    def set(self, product: IProduct):
+        self.product = product
+
+    @property
+    def name(self):
+        return self.product.get_name()
+
+    @property
+    def amount(self):
+        return self.product.get_amount()
