@@ -1,7 +1,4 @@
-from abc import ABC
-from agent_types import Consumer, Transformer
-from agent_supply_demand import IDemand, Demand, IProduct, Supply, Product
-
+from agents import Producer, Consumer
 
 class ConsumerBuilder:
     def __init__(self, name):
@@ -14,9 +11,9 @@ class ConsumerBuilder:
         return self
 
     def build(self):
-        return Consumer(self.name, self.demands)
+        return Consumer(self.demands)
 
-class TransformerBuilder:
+class ProducerBuilder:
     def __init__(self, name):
         self.name = name
         self.supply: Supply = Supply(Product("", 0))
@@ -32,4 +29,4 @@ class TransformerBuilder:
         return self
 
     def build(self):
-        return Transformer(self.name, self.supply, self.demands)
+        return Producer(self.supply, self.demands)
