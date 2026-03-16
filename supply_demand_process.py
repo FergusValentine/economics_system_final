@@ -1,23 +1,17 @@
 from market import Market
 
-class DemandProcess:
+class SupplyDemandProcess:
     def __init__(self, market: Market):
         self.market: Market = market
 
-    def execute(self):
+    def process_demands(self):
         agent_lists = self.market.get_agents()
 
         for agent_list in agent_lists.values():
             for agent in agent_list:
                 agent.fulfill_demand(self.market)
 
-class SupplyProcess:
-    def __init__(self, market: Market):
-        self.market: Market = market
-
-
-
-    def execute(self):
+    def process_supply(self):
         agent_lists = self.market.get_agents()
 
         for agent_list in agent_lists.values():

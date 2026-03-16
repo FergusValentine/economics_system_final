@@ -51,10 +51,13 @@ class Factory:
         return self.labor
 
     def add_labor(self, amount):
+        if self.labor + amount >= len(self.marginal_production):  ### FIX THIS
+            return
+
         self.labor = self.labor + amount
 
     def remove_labor(self, amount):
-        self.labor = self.labor - amount
+        self.labor = max(self.labor - amount, 0)
 
     def set_wages(self, wages):
         self.wages = wages
@@ -68,12 +71,21 @@ class Factory:
     def get_total_product(self, labor):
         return self.total_production[labor]
 
+    def get_marginal_cost(self, labor):
+        if labor == 0 or self.get_marginal_labor(labor) == 0:
+            return 0
+
+        return self.wages/self.get_marginal_labor(labor)
+
     def update_marginal_production(self):
         optimal_labor = self.appliances.get_optimal_labor_amount()
         maximum_production = self.appliances.get_max_production()
 
         total_product = 0
         total_labor = 0
+
+        self.marginal_production.clear()
+        self.total_production.clear()
 
         while total_product < maximum_production:
             marginal_product = pow(min(total_labor, optimal_labor)/max(total_labor, optimal_labor), 0.8) * self.efficiency
@@ -82,3 +94,4 @@ class Factory:
             self.marginal_production.append(marginal_product)
             self.total_production.append(total_product)
             total_labor += 1
+        pass

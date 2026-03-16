@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from obsolete.agent_supply_demand import Supply, IDemand
 from inventory import Inventory
 from market import Market
-from trade_strategy import ITradeStrategy, ProducerStrategy, ConsumptionStrategy
+from obsolete.trade_strategy import ITradeStrategy, ProducerStrategy, ConsumptionStrategy
 
 class IAgent(ABC):
     @abstractmethod

@@ -7,7 +7,7 @@ class CreateConsumer:
     def __init__(self):
         self.money = 0
         self.input: IProductList = ProductList()
-        self.trade_strategy = None
+        self.market_strategy = None
 
     def set_money(self, money):
         self.money = money
@@ -17,24 +17,29 @@ class CreateConsumer:
         self.input.add_product(demand)
         return self
 
-    def set_trade_strategy(self, trade_strategy):
-        self.trade_strategy = trade_strategy
+    def set_market_strategy(self, trade_strategy):
+        self.market_strategy = trade_strategy
         return self
 
     def build(self) -> Consumer:
-        agent = Consumer(self.money, self.input, self.trade_strategy)
+        agent = Consumer(self.money, self.input, self.market_strategy)
         return agent
 
 class CreateProducer:
     def __init__(self):
         self.money = 0
+        self.price = 0
         self.factory = None
         self.output: IProduct = Product("", 0)
         self.input: IProductList = ProductList()
-        self.trade_strategy = None
+        self.market_strategy = None
 
     def set_money(self, money):
         self.money = money
+        return self
+
+    def set_price(self, price):
+        self.price = price
         return self
 
     def add_demand(self, demand: IProduct):
@@ -49,12 +54,12 @@ class CreateProducer:
         self.factory = factory
         return self
 
-    def set_trade_strategy(self, trade_strategy):
-        self.trade_strategy = trade_strategy
+    def set_market_strategy(self, market_strategy):
+        self.market_strategy = market_strategy
         return self
 
     def build(self) -> Producer:
-        agent = Producer(self.money, self.output, self.input, self.factory, self.trade_strategy)
+        agent = Producer(self.money, self.price, self.output, self.input, self.factory, self.market_strategy)
         return agent
 
 class CreateFactory:
