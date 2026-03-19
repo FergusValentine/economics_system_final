@@ -14,8 +14,10 @@ class ConsumerStrategy(IMarketStrategy):
     def get_demand_prices(self, demands, market):
         market_prices = {}
         for product_name, product in demands.items():
-            product_average = market.get_market_category_average(product_name)
-            market_prices[product_name] = product_average
+            category = market.get_category(product_name)
+            category_average = category.get_average_price()
+
+            market_prices[product_name] = category_average
 
         return market_prices
 
@@ -28,6 +30,7 @@ class ConsumerStrategy(IMarketStrategy):
 
     def demand_function(self, agent, market):
         demands = agent.get_agent_demand()
+
         agent_wallet = agent.get_wallet()
         money = agent_wallet.get_money()
 
@@ -44,8 +47,10 @@ class ProducerStrategy(IMarketStrategy):
     def get_demand_prices(self, demands, market):
         market_prices = {}
         for product_name, product in demands.items():
-            product_average = market.get_market_category_average(product_name)
-            market_prices[product_name] = product_average
+            category = market.get_category(product_name)
+            category_average = category.get_average_price()
+
+            market_prices[product_name] = category_average
 
         return market_prices
 

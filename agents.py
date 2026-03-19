@@ -110,6 +110,7 @@ class Producer(IAgent):
 
         self.factory: Factory = factory
         self.trade_strategy: IMarketStrategy = market_strategy
+
         self.input: IProductList = demand
         self.output: IProduct = supply
 
@@ -182,7 +183,6 @@ class Producer(IAgent):
         production_value = production
 
         for demand, product in demands.items():
-            print(demand)
             amount = product.get_amount()
             consumed = production_value * amount
 
@@ -200,7 +200,6 @@ class Producer(IAgent):
 
         self.produce()
         self.agent_history.record_value("Supply V Demand", "Stock", self.get_agent_stock(self.get_market_category()))
-        self.agent_history.record_value("Labor", "Labor", self.factory.get_labor())
 
         print(product, "Supply:", supply, "Demand:", demand, "Price:", self.get_market_price())
         if abs(supply - demand) < 0.1:
@@ -226,7 +225,7 @@ class Producer(IAgent):
         self.agent_history.record_value("Price","Total_Cost", variable_cost)
 
         total_product = math.floor(self.factory.get_total_product(labor))
-        self.set_market_supply(total_product) # set market supply for agent demand next turn
+        self.set_market_supply(total_product)
         self.reset_market_demand()
 
     def fulfill_demand(self, market):

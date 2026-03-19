@@ -10,7 +10,7 @@ def main():
     economy = Economy()
     agents = []
 
-    for i in range(0, 10):
+    for i in range(0, 5):
         consumer = ((CreateConsumer()
                     .set_money(10)
                     .add_demand(Product("Bread", 1)))
@@ -24,7 +24,6 @@ def main():
              .add_demand(Product("Grain", 2))
              .set_factory(
                 CreateFactory()
-                    .set_labor(1)
                     .set_efficiency(4)
                     .set_wages(10)
                     .add_appliance(
@@ -55,7 +54,7 @@ def main():
     for agent in agents:
         economy.register_agent(agent)
 
-    for i in range(0, 250):
+    for i in range(0, 100):
         economy.execute_turn()
 
     snapshots = economy.get_market_history()

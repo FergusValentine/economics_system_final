@@ -5,15 +5,13 @@ class SupplyDemandProcess:
         self.market: Market = market
 
     def process_demands(self):
-        agent_lists = self.market.get_agents()
+        agent_list = self.market.get_agents()
 
-        for agent_list in agent_lists.values():
-            for agent in agent_list:
-                agent.fulfill_demand(self.market)
+        for agent in agent_list:
+            agent.fulfill_demand(self.market)
 
     def process_supply(self):
-        agent_lists = self.market.get_agents()
+        agent_list = self.market.get_agents()
 
-        for agent_list in agent_lists.values():
-            for agent in agent_list:
-                agent.fulfill_supply(self.market)
+        for agent in agent_list:
+            agent.fulfill_supply(self.market)
